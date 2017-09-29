@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+  <title>诺诺镑客12月大狂欢</title>
+  <meta name="format-detection" content="telephone=no">
+  <!-- safari full screen -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta id="apple-mobile-web-app-title" name="apple-mobile-web-app-title" content="诺诺镑客">
+  <!--build:css css/index.min.css-->
+  <link rel="stylesheet" type="text/css" href="css/index.css">
+  <!--endbuild-->
+  <script>
+    _pro_track_id = '85d644269157dba60983';
+  </script>
+  <script src="https://conversion.pro.cn/files/m.js"></script>
+  <script>
+  //声明_czc对象:
+  var _czc = _czc || [];
+  //绑定siteid，请用您的siteid替换下方"XXXXXXXX"部分
+  _czc.push(["_setAccount", "1260922624"]);
+  </script>
+  <script type="text/javascript" src="https://m.nonobank.com/nonoutil/js/tongdun.js"></script>
+</head>
+
+<body id="app" v-cloak>
+  <img src="images/nono_logo.png" class="full-width" alt="logo">
+  <section id="reg_page" v-if="!showSuccess">
+    <div class="padding-horizontal">
+      <form class="form-wrap " name="regForm">
+        <div class="item item-input">
+          <i class="item-icon icon-phone"></i>
+          <input type="tel" placeholder="请输入手机号" maxlength="11" v-model="regData.phone" @blur="validatePhone" />
+        </div>
+        <p class="error margin-bottom" v-show="error.phone">{{error.info.phone}}</p>
+        <div class="item item-input">
+          <i class="item-icon icon-pwd"></i>
+          <input type="password" placeholder="请输入密码" maxlength="16" v-model="regData.pwd" @blur="validatePwd" />
+        </div>
+        <p class="error margin-bottom" v-show="error.pwd">{{error.info.pwd}}</p>
+        <div class="row row-no-padding item">
+          <div class="col">
+            <div class="item-input">
+              <i class="item-icon icon-img"></i>
+              <input type="text" placeholder="请输入安全码" maxlength="4" value="" v-model="regData.safeCode" @blur="validateSafeCode" />
+            </div>
+          </div>
+          <div class="col-40 margin-left" @click="getCodeImg">
+            <img class="full-image full-height" :src="regData.codeImgPath">
+          </div>
+        </div>
+        <p class="error margin-bottom" v-show="error.safeCode">{{error.info.safeCode}}</p>
+        <div class="row row-no-padding item">
+          <div class="col">
+            <div class="item-input">
+              <i class="item-icon icon-sms"></i>
+              <input type="tel" placeholder="请输入验证码" maxlength="4" value="" v-model="regData.smsCode" @blur="validateSmsCode" />
+            </div>
+          </div>
+          <div class="col-40 button-small margin-left" v-bind:class="{'disabled':countdown.active}" @click="sendMessage" id="btnSendCode">
+            <span>
+                <b v-if="!countdown.active"  v-text="countdown.text"></b>
+                <b v-else >{{countdown.time}}s</b>
+              </span>
+          </div>
+        </div>
+        <p class="error margin-bottom" v-show="error.smsCode">{{error.info.smsCode}}</p>
+        <div class="button button-block dbl-margin-top" @click="regSubmit" id="btnReg">
+          <span>立即注册</span>
+        </div>
+      </form>
+      <p class="yellow cold text-center dbl-margin-top bold small">已有账号<a href="https://m.nonobank.com/" class="yellow underline">直接登录</a></p>
+      <p class="text-center arrow-down"><img src="images/icon_arrow_down.png" width="22"></p>
+      <div class="activity-container double12">
+        <div class="ac-title yellow">双十二瓜分千万现金活动规则</div>
+        <div><img src="images/activity_pic.png" class="full-width"></div>
+        <ul class="rule">
+          <li>活动时间：12月7号0点-13号24点；</li>
+          <li>活动期间单笔投资新客计划金额≥5000元，即可奖励现金10元；单笔投资贴心计划≥1万，最高可获得现金130元，投资可使用现金券和加息券；</li>
+          <li>新客注册额外可获得366元抵扣券，投资1000元即可抵扣16元，以此类推；</li>
+          <li>投资成功后我们将在2小时内将奖励的现金返至您的余额，奖励到账后您将收到站内信提醒；</li>
+          <li>本活动期间内共瓜分一千万现金，您可在登录后至活动页面查询您已获得的返现金额；</li>
+          <li>本活动按照单笔金额返利，单笔投资金额越大，返利越高；</li>
+          <li>本活动最终解释权归诺诺镑客所有。</li>
+        </ul>
+      </div>
+      <div class="activity-container history-box">
+        <div class="ac-title yellow">安全运营7年，累计成交近300亿</div>
+        <div class="item item-icon-left">
+          <i class="icon icon-history1"></i>
+          <div class="content">
+            <p class="bold">2009年6月</p>
+            <p class="small">诺诺镑客成立</p>
+          </div>
+        </div>
+        <div class="item item-icon-left">
+          <i class="icon icon-history2"></i>
+          <div class="content">
+            <p class="bold">2015年4月</p>
+            <p class="small">母公司麦子金服获海通创新A轮投资</p>
+          </div>
+        </div>
+        <div class="item item-icon-left">
+          <i class="icon icon-history3"></i>
+          <div class="content">
+            <p class="bold">2015年6月</p>
+            <p class="small">注册资本增值1.08亿元</p>
+          </div>
+        </div>
+      </div>
+      <p class="yellow small bold text-center">注册立即领取366元抵用券，投资可抵扣</p>
+      <div class="button dbl-margin-top dbl-margin-bottom" id="btnGet" @click="scrollTop"><span>立即领取</span></div>
+    </div>
+    <div class="footer text-center">
+      <p>风险提示：投资有风险，本项目非保本产品，不保证收益</p>
+      <p class="dbl-margin-top"><img src="images/logo_bot.png" width="162"></p>
+      <p>上海诺诺镑客金融信息服务有限公司</p>
+      <p>沪ICP备13003999号| 沪公网安备 31010402000145号</p>
+      <p>全国投资热线 1010-0668</p>
+    </div>
+  </section>
+  <section id="regSuccess" v-if="showSuccess">
+    <div class="padding-horizontal">
+      <div class="text-center"><img src="images/reg_success/hb.png" width="215"></div>
+      <div class="text-center dbl-margin-top white">
+        <i class="icon icon-right"></i>
+        <span class="txt">366元已放入账号:<span id="regPhone">{{regData.phone}}</span></span>
+      </div>
+      <div class="margin-top-50 text-center">
+        <div class="item-icon-left inline-block">
+          <i class="icon icon-nono"></i>
+          <p class="positive margin-bottom text-left">诺诺镑客</p>
+          <p class="white small text-left">注册送366元抵用券，投资小助手</p>
+        </div>
+      </div>
+      <div class="button" @click="downApp" id="btnDownload">立即下载APP<i class="icon icon-download"></i></div>
+    </div>
+    <div class="footer text-center">
+      <p>风险提示：投资有风险，本项目非保本产品，不保证收益</p>
+      <p class="dbl-margin-top"><img src="images/logo_bot.png" width="162"></p>
+      <p>上海诺诺镑客金融信息服务有限公司</p>
+      <p>沪ICP备13003999号| 沪公网安备 31010402000145号</p>
+      <p>全国投资热线 1010-0668</p>
+    </div>
+  </section>
+  <div id="loading" class="row row-center" v-show="showLoading">
+    <div class="inner">
+      <img src="images/loading.gif">
+    </div>
+  </div>
+  <div id="toastr" class="row row-center" :class="{active: toastrInfo}">
+    <p>{{toastrInfo}}</p>
+  </div>
+  <!--build:js js/vendor.min.js -->
+  <script src="js/zepto.js"></script>
+  <script src="js/vue.js"></script>
+  <script src="js/md5.js"></script>
+  <script src="js/util.js"></script>
+  <!--endbuild-->
+  <!--build:js js/main.min.js-->
+  <script src="js/index.js"></script>
+  <!--endbuild-->
+  <!--build:js js/piwik.min.js-->
+  <script src="js/piwik.js"></script>
+  <!--endbuild-->
+  <script>
+  var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+  document.write(unescape("%3Cspan style='display:none' id='cnzz_stat_icon_1260922624'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260922624' %3E%3C/script%3E"));
+  </script>
+</body>
+
+</html>
